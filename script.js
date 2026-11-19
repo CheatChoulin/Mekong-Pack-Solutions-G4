@@ -300,3 +300,290 @@ document.addEventListener("DOMContentLoaded", () => {
         items.forEach((el) => el.classList.add("is-visible"));
     }
 });
+
+/* =====================================================================
+   Mekong Pack Solutions - working features (all pages)
+   Search, category filter, clickable cards/buttons, enquiry form.
+   No design changes: it only adds behaviour (plus a few invisible
+   accessibility helpers).
+   ===================================================================== */
+(function () {
+    "use strict";
+
+    /* ---- Contact form settings (fill ONE in to really receive enquiries) ----
+       CONTACT_EMAIL : opens the visitor's email app addressed to you
+       FORM_ENDPOINT : a form service URL (e.g. Formspree) that accepts a POST
+       Leave both empty = demo mode (form validates and shows a thank-you only) */
+    var CONFIG = { CONTACT_EMAIL: "", FORM_ENDPOINT: "" };
+
+    /* ---- tiny CSS: cursor + keyboard focus ring + helpers (no layout change) ---- */
+    var css = "\
+[data-href], .mp-clickable, .mp-card-link { cursor:pointer; }\
+.mp-hide { display:none !important; }\
+.mp-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }\
+.mp-empty { grid-column:1 / -1; text-align:center; padding:48px 16px; font-size:14px; color:#6B7280; }\
+.mp-empty strong { color:#7C3AED; }\
+a:focus-visible, button:focus-visible, select:focus-visible, [role='link']:focus-visible, [role='button']:focus-visible,\
+header > p:focus-visible, footer > p:focus-visible { outline:2px solid #7C3AED; outline-offset:2px; }\
+";
+    var st = document.createElement("style");
+    st.setAttribute("data-mp", "features");
+    st.textContent = css;
+    (document.head || document.documentElement).appendChild(st);
+
+    function qs(s, r) { return (r || document).querySelector(s); }
+    function qa(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+    function file(path) {
+        var n = String(path || "").split("#")[0].split("?")[0].split("/").pop().toLowerCase();
+        return n === "" ? "index.html" : n;
+    }
+
+    function init() {
+        var here = file(location.pathname);
+        var params = new URLSearchParams(location.search);
+
+        /* ---------- Make non-link elements keyboard + mouse friendly ---------- */
+        function makeButton(el, label, fn) {
+            if (!el) return;
+            el.setAttribute("role", el.getAttribute("role") || "button");
+            if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "0");
+            if (label && !el.hasAttribute("aria-label")) el.setAttribute("aria-label", label);
+            el.classList.add("mp-clickable");
+            el.addEventListener("click", fn);
+            el.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(e); }
+            });
+        }
+
+        /* ---------- Logo: header goes Home, footer scrolls to top ---------- */
+        var hLogo = qs("header > p");
+        if (hLogo) {
+            hLogo.setAttribute("data-href", "index.html");
+            hLogo.setAttribute("role", "link");
+            hLogo.setAttribute("tabindex", "0");
+            hLogo.setAttribute("aria-label", "Mekong Pack Solutions - Home");
+        }
+        makeButton(qs("footer > p"), "Back to top", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        /* ---------- Generic [data-href] elements (click / Enter / Space) ---------- */
+        qa("[data-href]").forEach(function (el) {
+            function go() {
+                var url = el.getAttribute("data-href");
+                if (file(url) === here && url.indexOf("?") === -1) {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                } else {
+                    location.href = url;
+                }
+            }
+            el.addEventListener("click", go);
+            el.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+            });
+        });
+
+        /* ---------- Whole product card is clickable (follows its Explore link) ---------- */
+        qa(".main-card, .box-list, .container-pic-product").forEach(function (card) {
+            var link = qs("a[href]", card);
+            if (!link && !qs("[data-href]", card)) return;
+            card.classList.add("mp-card-link");
+            card.addEventListener("click", function (e) {
+                if (e.target.closest("a, button, input, select, [data-href]")) return;
+                if (link) link.click();
+            });
+        });
+
+        /* ================= HOME: search box ================= */
+        var homeSearch = qs(".container-products > input");
+        if (homeSearch) {
+            var goSearch = function () {
+                var q = homeSearch.value.trim();
+                location.href = "products.html" + (q ? "?q=" + encodeURIComponent(q) : "");
+            };
+            homeSearch.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") { e.preventDefault(); goSearch(); }
+            });
+            // The magnifier / filter icons are drawn inside the input's background
+            homeSearch.addEventListener("mousemove", function (e) {
+                var x = e.offsetX, w = homeSearch.clientWidth;
+                homeSearch.style.cursor = (x < 44 || x > w - 44) ? "pointer" : "text";
+            });
+            homeSearch.addEventListener("click", function (e) {
+                var x = e.offsetX, w = homeSearch.clientWidth;
+                if (x < 44 || x > w - 44) goSearch();
+            });
+        }
+
+        /* ================= PRODUCTS: live search + category filter ================= */
+        var grid = qs(".card-grid");
+        var cards = qa(".main-card");
+        var input = qs(".search-box input");
+        var select = qs("#sort");
+
+        if (grid && cards.length && input) {
+            var CATS = { meals: "meals", snacks: "snacks", drink: "drink", burger: "burger" };
+            var ALIAS = { truffle: "traffle", takaway: "takeaway" };   // spelling variants
+
+            cards.forEach(function (c) {
+                c._txt = qa(".tittle h4, .tittle h1, .tittle p", c)
+                    .map(function (n) { return n.textContent; }).join(" ")
+                    .replace(/\s+/g, " ").toLowerCase();
+            });
+
+            var empty = document.createElement("p");
+            empty.className = "mp-empty mp-hide";
+            grid.appendChild(empty);
+
+            var status = document.createElement("div");
+            status.className = "mp-sr";
+            status.setAttribute("role", "status");
+            status.setAttribute("aria-live", "polite");
+            grid.parentNode.insertBefore(status, grid);
+
+            var apply = function () {
+                var raw = input.value.trim();
+                var terms = raw.toLowerCase().split(/\s+/).filter(Boolean)
+                    .map(function (t) { return ALIAS[t] || t; });
+                var cat = select ? select.value : "popular";
+                var shown = 0;
+
+                cards.forEach(function (c) {
+                    var ok = terms.every(function (t) { return c._txt.indexOf(t) > -1; }) &&
+                             (!CATS[cat] || c._txt.indexOf(CATS[cat]) > -1);
+                    c.classList.toggle("mp-hide", !ok);
+                    if (ok) shown++;
+                });
+
+                if (shown === 0) {
+                    empty.textContent = "";
+                    empty.appendChild(document.createTextNode("No products found"));
+                    if (raw) {
+                        empty.appendChild(document.createTextNode(" for "));
+                        var b = document.createElement("strong");
+                        b.textContent = "\u201C" + raw + "\u201D";
+                        empty.appendChild(b);
+                    }
+                    empty.appendChild(document.createTextNode(". Try a different word or category."));
+                }
+                empty.classList.toggle("mp-hide", shown > 0);
+                status.textContent = shown + (shown === 1 ? " product" : " products") + " shown";
+            };
+
+            input.addEventListener("input", apply);
+            input.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") e.preventDefault();
+                if (e.key === "Escape" && input.value) { input.value = ""; apply(); }
+            });
+            if (select) select.addEventListener("change", apply);
+
+            // Magnifier focuses + runs the search, filter icon opens the category list
+            var icons = qa(".search-box i");
+            makeButton(icons[0], "Search", function () { input.focus(); apply(); });
+            makeButton(icons[1], "Filter by category", function () {
+                if (!select) return;
+                select.focus();
+                try { if (select.showPicker) select.showPicker(); } catch (err) { /* ignore */ }
+            });
+
+            // Arrived from the home page search (?q=burger)
+            var q = params.get("q");
+            if (q) input.value = q;
+            apply();
+
+            // Explore on each product -> enquiry form with that product pre-filled
+            cards.forEach(function (c) {
+                var a = qs(".tittle h3 a", c);
+                if (!a) return;
+                var name = (qs("h1", c) || {}).textContent || "";
+                var kind = (qs(".tittle p", c) || {}).textContent || "";
+                var label = (name.trim() + (kind ? " - " + kind.trim() : "")).trim();
+                a.setAttribute("href", "contact.html?product=" + encodeURIComponent(label));
+                a.setAttribute("aria-label", "Explore " + label);
+            });
+        }
+
+        /* ================= CONTACT: enquiry form ================= */
+        var form = qs(".contact-form form");
+        if (form) {
+            var nameEl = qs("#name", form), msgEl = qs("#message", form);
+            var btn = qs(".submit-btn", form);
+
+            var msg = document.createElement("p");
+            msg.className = "note mp-hide";
+            msg.setAttribute("role", "status");
+            msg.setAttribute("aria-live", "polite");
+            var oldNote = qs(".note", form);
+            (oldNote || btn).insertAdjacentElement("afterend", msg);
+
+            function say(text, good) {
+                msg.textContent = text;
+                msg.classList.remove("mp-hide");
+                msg.style.color = good ? "#7C3AED" : "#B91C1C";
+            }
+
+            // Arrived from a product's Explore link
+            var product = params.get("product");
+            if (product && msgEl && !msgEl.value.trim()) {
+                msgEl.value = "Hello, I would like to enquire about: " + product +
+                              ".\nQuantity:\nIntended use:";
+                setTimeout(function () {
+                    form.scrollIntoView({ behavior: "smooth", block: "center" });
+                    if (nameEl) nameEl.focus({ preventScroll: true });
+                }, 150);
+            }
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();               // runs only after native required/email checks pass
+                var data = {};
+                qa("input, textarea", form).forEach(function (f) { if (f.name) data[f.name] = f.value.trim(); });
+
+                if (!data.name || !data.message) {
+                    say("Please fill in your name and message.", false);
+                    (data.name ? msgEl : nameEl).focus();
+                    return;
+                }
+
+                var label = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = "Sending...";
+
+                function finish(ok, text) {
+                    btn.disabled = false;
+                    btn.textContent = label;
+                    say(text, ok);
+                    if (ok) form.reset();
+                }
+
+                if (CONFIG.FORM_ENDPOINT) {
+                    fetch(CONFIG.FORM_ENDPOINT, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                        body: JSON.stringify(data)
+                    }).then(function (r) {
+                        finish(r.ok, r.ok ? "Thank you! Your enquiry has been sent. We will reply soon."
+                                          : "Sorry, something went wrong. Please try again.");
+                    }).catch(function () {
+                        finish(false, "Could not send. Please check your connection and try again.");
+                    });
+                } else if (CONFIG.CONTACT_EMAIL) {
+                    var body = "Name: " + data.name + "\nEmail: " + data.email +
+                               "\nCompany: " + (data.company || "-") + "\nPhone: " + (data.phone || "-") +
+                               "\n\n" + data.message;
+                    location.href = "mailto:" + CONFIG.CONTACT_EMAIL +
+                        "?subject=" + encodeURIComponent("Website enquiry from " + data.name) +
+                        "&body=" + encodeURIComponent(body);
+                    finish(true, "Thank you! Your email app should open so you can send the enquiry.");
+                } else {
+                    finish(true, "Thank you! Your enquiry was received. (Demo mode: no live submission is connected yet.)");
+                }
+            });
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();
