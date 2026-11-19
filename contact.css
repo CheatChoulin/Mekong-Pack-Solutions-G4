@@ -1,0 +1,790 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=swap");
+
+:root {
+--primary: #7C3AED;
+--secondary: #A855F7;
+--pale-1: #DDD6FE;
+--pale-2: #F5F3FF;
+
+--text-main: #1F2937;
+--text-secondary: #6B7280;
+--white: #FFFFFF;
+--border: #E5E7EB;
+
+--font-heading: "Nunito", sans-serif;
+--font-body: "Inter", sans-serif;
+
+--side-padding: clamp(16px, 8.4vw, 120px);
+}
+
+
+@media (min-width: 1441px) {
+:root {
+--side-padding: calc((100vw - 1200px) / 2);
+}
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+html {
+-webkit-text-size-adjust: 100%;
+}
+
+body {
+font-family: "Inter", sans-serif;
+color: #1F2937;
+background: #ffffff;
+overflow-x: hidden;
+scroll-behavior: smooth;
+}
+
+img {
+max-width: 100%;
+display: block;
+}
+
+/* Fonts: Nunito for headings, Inter for body text (from the design file) */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+}
+
+
+
+header {
+position: sticky;
+top: 0;
+z-index: 100;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: space-between;
+gap: 12px 24px;
+padding: 20px var(--side-padding);
+background: #DDD6FE;
+font-family: "Nunito", sans-serif;
+color: #1f2937;
+}
+
+
+header > p {
+order: 1;
+font-size: 11px;
+font-weight: 400;
+letter-spacing: 0.5px;
+line-height: 1;
+}
+
+header > p span {
+display: block;
+font-size: clamp(20px, 1.8vw, 26px);
+font-weight: 700;
+letter-spacing: 0;
+line-height: 1.1;
+}
+
+
+header nav {
+order: 2;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 12px clamp(20px, 3.4vw, 48px);
+}
+
+header nav a {
+position: relative;
+font-size: clamp(16px, 1.4vw, 20px);
+font-weight: 600;
+color: #1f2937;
+text-decoration: none;
+transition: color 0.2s;
+}
+
+header nav a::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: -6px;
+width: 0;
+height: 2px;
+background: #000000;
+transition: width 0.25s;
+}
+
+header nav a:hover {
+color: #7C3AED;
+}
+
+header nav a:hover::after {
+width: 100%;
+}
+
+
+.btn-header {
+order: 3;
+background: var(--primary);
+color: #ffffff;
+font-size: 16px;
+font-weight: 700;
+padding: 14px 24px;
+border-radius: 16px;
+cursor: pointer;
+transition: background 0.2s;
+}
+
+.btn-header a {
+text-decoration: none;
+color: #ffffff;
+font-size: clamp(14px, 1.4vw, 20px);
+}
+
+.btn-header:hover {
+background: var(--secondary);
+}
+
+.btn-header a:hover {
+color: white;
+}
+
+
+@media (max-width: 900px) {
+
+.btn-header {
+order: 2;
+padding: 10px 18px;
+border-radius: 12px;
+}
+
+header nav {
+order: 3;
+flex-basis: 100%;
+justify-content: center;
+}
+}
+
+
+@media (max-width: 520px) {
+header {
+padding-top: 14px;
+padding-bottom: 14px;
+row-gap: 10px;
+}
+
+.btn-header {
+padding: 9px 14px;
+border-radius: 10px;
+}
+
+header nav {
+gap: 12px 20px;
+}
+}
+
+@media (max-width: 420px) {
+header {
+gap: 10px 12px;
+}
+
+header > p span {
+font-size: 18px;
+}
+
+header nav {
+gap: 10px 18px;
+}
+
+header nav a {
+font-size: 15px;
+}
+
+.btn-header {
+padding: 8px 12px;
+}
+
+.btn-header a {
+font-size: 13px;
+}
+}
+
+
+@media (max-height: 500px) and (orientation: landscape) {
+header {
+position: static;
+}
+}
+
+
+
+
+
+.body {
+    font-family: var(--font-body);
+    background:#FFFFFF ;
+    color: #222;
+    font-size: 13px;
+}
+.hero {
+    background:  #F5F3FF;
+    padding: 20px var(--side-padding);
+}
+.hero small {
+    margin-top: 35px;
+}
+.hero p {
+    margin-bottom: 35px;
+}
+.hero samll {
+    font-size: 9px;
+}
+
+.hero h2 {
+    font-size: clamp(28px, 4.2vw, 48px);
+    margin: 15px 0;
+}
+.hero p {
+    font-size: clamp(14px, 1.2vw, 16px);
+    line-height: 1.7;
+}
+.form-container h3 {
+    font-size: 20px;
+    margin-bottom:10px;
+}
+.form label {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 12px 0 6px;
+
+}
+
+
+
+.btn-hero {
+display: grid;
+grid-auto-flow: column;
+grid-auto-columns: 1fr;
+width: fit-content;
+gap: 16px 24px;
+margin-top: 12px;
+}
+
+.btn-explore,
+.btn-contact-us {
+border-radius: 12px;
+cursor: pointer;
+transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-explore a,
+.btn-contact-us a {
+display: block;
+padding: 12px 24px;
+font-size: clamp(14px, 1.2vw, 18px);
+font-weight: 700;
+text-align: center;
+text-decoration: none;
+white-space: nowrap;
+}
+
+.btn-explore {
+background: var(--primary);
+border: 1px solid var(--primary);
+}
+
+.btn-explore a {
+color: #ffffff;
+}
+
+.btn-explore:hover {
+background: var(--secondary);
+border-color: var(--secondary);
+}
+
+.btn-contact-us {
+background: transparent;
+border: 1px solid var(--primary);
+}
+
+.btn-contact-us a {
+color: #1f2937;
+}
+
+.btn-contact-us:hover {
+background: var(--primary);
+}
+.btn-contact-us a:hover{
+color: #FFFFFF;
+}
+
+
+
+
+
+
+
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-main);
+    background: white;
+}
+
+
+.contact-section {
+    padding: 20px var(--side-padding);
+    margin: 35px 0;
+}
+
+.contact-container {
+    max-width: none;
+    margin: 0;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 35px;
+
+    align-items: start;
+}
+
+.contact-form h2 {
+    font-size: clamp(24px, 2.4vw, 32px);
+    margin-bottom: 12px;
+}
+
+.description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+}
+
+.enquiry-type {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.explore-btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+
+    text-decoration: none;
+    font-size: 12px;
+
+    padding: 10px 25px;
+    border-radius: 9px;
+}
+
+.explore-btn:hover {
+    background: #A855F7;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+
+    border: 1px solid #B8C0C7;
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-family: inherit;
+
+    outline: none;
+}
+
+input {
+    height: 38px;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #A855F7;
+}
+
+small {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 7px;
+}
+
+
+.message-group {
+    margin-top: 3px;
+}
+
+textarea {
+    height: 110px;
+    resize: vertical;
+}
+
+.privacy-text {
+    font-size:14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 18px 0;
+}
+
+
+.submit-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 13px 35px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.submit-btn:hover,
+.explore-btn:hover {
+    background: var(--secondary);
+}
+
+.note {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 18px;
+}
+
+.contact-info {
+    background: #DDD6FE;
+    padding: 25px 20px;
+
+    border-radius: 10px;
+}
+
+.contact-info h2 {
+    font-size: 24px;
+    margin-bottom: 18px;
+}
+
+.contact-info h3 {
+    font-size: 16px;
+    margin: 20px 0 12px;
+}
+
+.contact-info p,
+.contact-info li {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+
+.contact-info ul {
+    padding-left: 18px;
+}
+
+.company {
+    margin-bottom: 15px;
+}
+
+.map-note {
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .contact-info {
+        width: 100%;
+    }
+
+    .contact-section {
+        margin: 24px 0;
+    }
+
+    /* 16px inputs stop phones from zooming in when you tap a field */
+    input,
+    textarea {
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 520px) {
+    .submit-btn {
+        width: 100%;
+        padding: 14px 20px;
+    }
+
+    .btn-hero,
+    .btn-explore {
+        width: 100%;
+    }
+
+    .contact-info {
+        padding: 20px 16px;
+    }
+}
+.partnership-section {
+    background-color: #F5F3FF;
+    padding: 20px var(--side-padding);
+    margin-bottom: -50px;
+}
+
+.partnership-container {
+    max-width: none;
+    margin: 0;
+    padding: clamp(40px, 6vw, 80px) 0;
+}
+
+.partnership-container h2 {
+    font-size: clamp(24px, 3vw, 36px);
+    margin-bottom: 20px;
+}
+
+.partnership-container p {
+    color: black;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+
+footer {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr auto;
+    grid-template-areas:
+        "logo quick why"
+        "info quick why"
+        "copy copy  copy";
+    column-gap: clamp(24px, 4vw, 60px);
+    row-gap: 12px;
+    align-items: start;
+    padding: 20px var(--side-padding);
+    background: #DDD6FE;
+    font-family: "Nunito", sans-serif;
+    color: #1f2937;
+    margin-top: 50px;
+}
+
+
+footer > p {
+    grid-area: logo;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+footer > p span {
+    display: block;
+    font-size: clamp(20px, 1.8vw, 26px);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.1;
+}
+
+.left-footer {
+    grid-area: info;
+    min-width: 0;
+}
+
+.left-footer > p {
+    max-width: 280px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.icon-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.icon-footer img {
+    width: 24px;
+    height: 24px;
+    object-fit: fill;
+    border-radius: 100%;
+}
+
+.middle-footer {
+    grid-area: quick;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-left: -70px;
+}
+
+.middle-footer::before {
+    content: "QUICK LINKS";
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.middle-footer a {
+    position: relative;
+    width: fit-content;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.middle-footer a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #000000;
+    transition: width 0.25s;
+}
+
+.middle-footer a:hover {
+    color: #7C3AED;
+}
+
+.middle-footer a:hover::after {
+    width: 100%;
+}
+
+.right-footer {
+    grid-area: why;
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.right-footer span {
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.right-footer p {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+footer::after {
+    content: "© 2026 Mekong Pack Solutions. All rights reserved.";
+    grid-area: copy;
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid #6B7280;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+    .middle-footer {
+        margin-left: 0;
+    }
+}
+
+
+@media (max-width: 900px) {
+    footer {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "logo  logo"
+            "info  info"
+            "quick why"
+            "copy  copy";
+        column-gap: 24px;
+        row-gap: 20px;
+        padding-top: 28px;
+        padding-bottom: 20px;
+        margin-top: 32px;
+    }
+
+    .middle-footer {
+        margin-left: 0;
+    }
+
+    .right-footer {
+        justify-self: start;
+    }
+
+    .left-footer > p {
+        max-width: 360px;
+    }
+
+    footer::after {
+        margin-top: 12px;
+        padding-top: 20px;
+        font-size: 14px;
+    }
+}
+
+
+@media (max-width: 520px) {
+    footer {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "logo"
+            "info"
+            "quick"
+            "why"
+            "copy";
+        row-gap: 24px;
+        margin-top: 24px;
+    }
+
+    .left-footer > p,
+    .middle-footer::before,
+    .middle-footer a,
+    .right-footer span,
+    .right-footer p {
+        font-size: 18px;
+    }
+
+    .icon-footer img {
+        width: 36px;
+        height: 36px;
+    }
+
+    footer::after {
+        font-size: 13px;
+    }
+}
