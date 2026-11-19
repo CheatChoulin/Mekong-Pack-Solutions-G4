@@ -1,0 +1,314 @@
+/* ===== Animations for Mekong Pack Solutions =====
+   Load this AFTER style.css */
+
+/* ---------- Keyframes ---------- */
+@keyframes slide-from-left {
+    from { opacity: 0; transform: translateX(-80px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-from-right {
+    from { opacity: 0; transform: translateX(80px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-from-top {
+    from { opacity: 0; transform: translateY(-40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-from-bottom {
+    from { opacity: 0; transform: translateY(50px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes grow-up {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+@keyframes grow-bar {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+@keyframes float-soft {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+/* ---------- On page load ---------- */
+/* "backwards" fill: after the animation ends, normal styles (like hover) work again */
+header {
+    animation: slide-from-top 0.7s ease-out backwards;
+}
+
+.hero-section .left-con > * {
+    animation: slide-from-left 0.9s ease-out backwards;
+}
+.hero-section .left-con > *:nth-child(1) { animation-delay: 0.15s; }
+.hero-section .left-con > *:nth-child(2) { animation-delay: 0.30s; }
+.hero-section .left-con > *:nth-child(3) { animation-delay: 0.45s; }
+.hero-section .left-con > *:nth-child(4) { animation-delay: 0.60s; }
+
+.hero-section img {
+    animation: slide-from-right 1s ease-out 0.25s backwards;
+}
+
+/* ---------- On scroll (JS adds .is-visible) ---------- */
+.reveal {
+    opacity: 0;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    animation-duration: 0.9s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: backwards;
+    animation-delay: var(--delay, 0s);
+}
+
+.reveal-left.is-visible   { animation-name: slide-from-left; }
+.reveal-right.is-visible  { animation-name: slide-from-right; }
+.reveal-up.is-visible     { animation-name: slide-from-bottom; }
+
+/* Bars in the purple card grow up, one after another */
+.shapes-container > div {
+    transform-origin: bottom;
+}
+.container-total.is-visible .shapes-container > div {
+    animation: grow-up 0.8s ease-out backwards;
+}
+.container-total.is-visible .shape1 { animation-delay: 0.10s; }
+.container-total.is-visible .shape2 { animation-delay: 0.20s; }
+.container-total.is-visible .shape3 { animation-delay: 0.30s; }
+.container-total.is-visible .shape4 { animation-delay: 0.40s; }
+.container-total.is-visible .shape5 { animation-delay: 0.50s; }
+.container-total.is-visible .shape6 { animation-delay: 0.60s; }
+.container-total.is-visible .shape7 { animation-delay: 0.70s; }
+.container-total.is-visible .shape8 { animation-delay: 0.80s; }
+
+/* Progress line fills */
+.shape-2 {
+    transform-origin: left;
+}
+.containter-last.is-visible .shape-2 {
+    animation: grow-bar 1.2s ease-out 0.4s backwards;
+}
+
+/* Big product picture gently floats */
+.container-pic-product > img {
+    animation: float-soft 5s ease-in-out infinite;
+}
+
+/* ---------- Nav: underline stays on the clicked link ---------- */
+header nav a.active {
+    color: #7C3AED !important;
+}
+
+header nav a.active::after {
+    width: 100% !important;
+    transform-origin: left;
+    animation: grow-bar 0.45s ease-out;
+}
+
+/* ---------- About page: intro text slides in on load ---------- */
+.about-text > * {
+    animation: slide-from-left 0.9s ease-out backwards;
+}
+.about-text > *:nth-child(1) { animation-delay: 0.15s; }
+.about-text > *:nth-child(2) { animation-delay: 0.30s; }
+.about-text > *:nth-child(3) { animation-delay: 0.45s; }
+.about-text > *:nth-child(4) { animation-delay: 0.55s; }
+.about-text > *:nth-child(5) { animation-delay: 0.65s; }
+.about-text > *:nth-child(6) { animation-delay: 0.75s; }
+
+/* ---------- Respect "reduce motion" settings ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .reveal {
+        opacity: 1;
+    }
+}
+/* ===== Animations for Mekong Pack Solutions =====
+   Load this AFTER style.css */
+
+/* ---------- Keyframes ---------- */
+@keyframes slide-from-left {
+    from { opacity: 0; transform: translateX(-80px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-from-right {
+    from { opacity: 0; transform: translateX(80px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-from-top {
+    from { opacity: 0; transform: translateY(-40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-from-bottom {
+    from { opacity: 0; transform: translateY(50px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes grow-up {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+@keyframes grow-bar {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+@keyframes float-soft {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+/* ---------- On page load ---------- */
+/* "backwards" fill: after the animation ends, normal styles (like hover) work again */
+header {
+    animation: slide-from-top 0.7s ease-out backwards;
+}
+
+.hero-section .left-con > * {
+    animation: slide-from-left 0.9s ease-out backwards;
+}
+.hero-section .left-con > *:nth-child(1) { animation-delay: 0.15s; }
+.hero-section .left-con > *:nth-child(2) { animation-delay: 0.30s; }
+.hero-section .left-con > *:nth-child(3) { animation-delay: 0.45s; }
+.hero-section .left-con > *:nth-child(4) { animation-delay: 0.60s; }
+
+.hero-section img {
+    animation: slide-from-right 1s ease-out 0.25s backwards;
+}
+
+/* ---------- On scroll (JS adds .is-visible) ---------- */
+.reveal {
+    opacity: 0;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    animation-duration: 0.9s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: backwards;
+    animation-delay: var(--delay, 0s);
+}
+
+.reveal-left.is-visible   { animation-name: slide-from-left; }
+.reveal-right.is-visible  { animation-name: slide-from-right; }
+.reveal-up.is-visible     { animation-name: slide-from-bottom; }
+
+/* Bars in the purple card grow up, one after another */
+.shapes-container > div {
+    transform-origin: bottom;
+}
+.container-total.is-visible .shapes-container > div {
+    animation: grow-up 0.8s ease-out backwards;
+}
+.container-total.is-visible .shape1 { animation-delay: 0.10s; }
+.container-total.is-visible .shape2 { animation-delay: 0.20s; }
+.container-total.is-visible .shape3 { animation-delay: 0.30s; }
+.container-total.is-visible .shape4 { animation-delay: 0.40s; }
+.container-total.is-visible .shape5 { animation-delay: 0.50s; }
+.container-total.is-visible .shape6 { animation-delay: 0.60s; }
+.container-total.is-visible .shape7 { animation-delay: 0.70s; }
+.container-total.is-visible .shape8 { animation-delay: 0.80s; }
+
+/* Progress line fills */
+.shape-2 {
+    transform-origin: left;
+}
+.containter-last.is-visible .shape-2 {
+    animation: grow-bar 1.2s ease-out 0.4s backwards;
+}
+
+/* Big product picture gently floats */
+.container-pic-product > img {
+    animation: float-soft 5s ease-in-out infinite;
+}
+
+/* ---------- Nav: underline stays on the clicked link ---------- */
+header nav a.active {
+    color: #7C3AED !important;
+}
+
+header nav a.active::after {
+    width: 100% !important;
+    transform-origin: left;
+    animation: grow-bar 0.45s ease-out;
+}
+
+/* ---------- About page: intro text slides in on load ---------- */
+.about-text > * {
+    animation: slide-from-left 0.9s ease-out backwards;
+}
+.about-text > *:nth-child(1) { animation-delay: 0.15s; }
+.about-text > *:nth-child(2) { animation-delay: 0.30s; }
+.about-text > *:nth-child(3) { animation-delay: 0.45s; }
+.about-text > *:nth-child(4) { animation-delay: 0.55s; }
+.about-text > *:nth-child(5) { animation-delay: 0.65s; }
+.about-text > *:nth-child(6) { animation-delay: 0.75s; }
+
+/* ---------- Contact page ---------- */
+/* Intro band slides in on load */
+.hero > * {
+    animation: slide-from-left 0.9s ease-out backwards;
+}
+.hero > *:nth-child(1) { animation-delay: 0.15s; }
+.hero > *:nth-child(2) { animation-delay: 0.30s; }
+.hero > *:nth-child(3) { animation-delay: 0.45s; }
+
+/* Form fields and buttons react smoothly */
+.form-group input,
+.form-group textarea {
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 0 3px #DDD6FE;
+}
+.submit-btn {
+    transition: background 0.2s, transform 0.2s;
+}
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Contact/Partnership button: stays highlighted on the contact page */
+.btn-header a {
+    position: relative;
+}
+.btn-header.active {
+    background: #7C3AED;
+}
+.btn-header.active a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: #ffffff;
+    transform-origin: left;
+    animation: grow-bar 0.45s ease-out;
+}
+
+/* ---------- Respect "reduce motion" settings ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .reveal {
+        opacity: 1;
+    }
+}
