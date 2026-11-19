@@ -1,0 +1,635 @@
+:root {
+--primary: #7c3aed;
+--text: #111;
+--muted: #6b6b6b;
+--border: #e4e4e7;
+--bg: #fff;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=swap");
+
+:root {
+/* Brand colors */
+--primary: #7C3AED;
+--secondary: #A855F7;
+--pale-1: #DDD6FE;
+--pale-2: #F5F3FF;
+
+/* Shared colors */
+--text-main: #1F2937;
+--text-secondary: #6B7280;
+--white: #FFFFFF;
+--border: #E5E7EB;
+
+/* Fonts */
+--font-heading: "Nunito", sans-serif;
+--font-body: "Inter", sans-serif;
+
+/* Side padding: 120px on desktop, shrinks on smaller screens */
+--side-padding: clamp(16px, 8.4vw, 120px);
+}
+
+/* Big screens: content stays 1200px wide and centered */
+@media (min-width: 1441px) {
+:root {
+--side-padding: calc((100vw - 1200px) / 2);
+}
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+html {
+-webkit-text-size-adjust: 100%;
+}
+
+body {
+font-family: "Inter", sans-serif;
+color: #1F2937;
+background: #ffffff;
+overflow-x: hidden;
+scroll-behavior: smooth;
+}
+
+img {
+max-width: 100%;
+display: block;
+}
+
+/* Header */
+header {
+position: sticky;
+top: 0;
+z-index: 100;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: space-between;
+gap: 12px 24px;
+padding: 20px var(--side-padding);
+background: #DDD6FE;
+font-family: "Nunito", sans-serif;
+color: #1f2937;
+}
+
+/* Header logo */
+header > p {
+order: 1;
+font-size: 11px;
+font-weight: 400;
+letter-spacing: 0.5px;
+line-height: 1;
+}
+
+header > p span {
+display: block;
+font-size: clamp(20px, 1.8vw, 26px);
+font-weight: 700;
+letter-spacing: 0;
+line-height: 1.1;
+}
+
+/* Nav links */
+header nav {
+order: 2;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 12px clamp(20px, 3.4vw, 48px);
+}
+
+header nav a {
+position: relative;
+font-size: clamp(16px, 1.4vw, 20px);
+font-weight: 600;
+color: #1f2937;
+text-decoration: none;
+transition: color 0.2s;
+}
+
+header nav a::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: -6px;
+width: 0;
+height: 2px;
+background: #000000;
+transition: width 0.25s;
+}
+
+header nav a:hover {
+color: #7C3AED;
+}
+
+header nav a:hover::after {
+width: 100%;
+}
+
+/* Header button */
+.btn-header {
+order: 3;
+background: #A855F7;
+color: #ffffff;
+font-size: 16px;
+font-weight: 700;
+padding: 14px 24px;
+border-radius: 16px;
+cursor: pointer;
+transition: background 0.2s;
+}
+
+.btn-header a {
+text-decoration: none;
+font-size: clamp(14px, 1.4vw, 20px);
+color: #000000;
+}
+
+.btn-header:hover {
+background: #7C3AED;
+}
+
+.btn-header a:hover {
+color: white;
+}
+
+/* Header tablet (up to 900px) */
+@media (max-width: 900px) {
+/* Logo and button on row 1, nav centered on row 2 */
+.btn-header {
+order: 2;
+padding: 10px 18px;
+border-radius: 12px;
+}
+
+header nav {
+order: 3;
+flex-basis: 100%;
+justify-content: center;
+}
+}
+
+/* Header mobile (up to 520px) */
+@media (max-width: 520px) {
+header {
+padding-top: 14px;
+padding-bottom: 14px;
+row-gap: 10px;
+}
+
+.btn-header {
+padding: 9px 14px;
+border-radius: 10px;
+}
+
+header nav {
+gap: 12px 20px;
+}
+}
+
+/* Header small phones (up to 420px) */
+@media (max-width: 420px) {
+header {
+gap: 10px 12px;
+}
+
+header > p span {
+font-size: 18px;
+}
+
+header nav {
+gap: 10px 18px;
+}
+
+header nav a {
+font-size: 15px;
+}
+
+.btn-header {
+padding: 8px 12px;
+}
+
+.btn-header a {
+font-size: 13px;
+}
+}
+
+/* Header phones turned sideways: header scrolls away to save space */
+@media (max-height: 500px) and (orientation: landscape) {
+header {
+position: static;
+}
+}
+body {
+font-family: "Nunito", sans-serif;
+color: var(--text);
+background: var(--bg);
+}
+
+/* ---------- Section wrapper (padding 20px 120px) ---------- */
+.card-hero {
+padding: 20px 120px;
+display: flex;
+flex-direction: column;
+gap: 24px;
+}
+
+/* ---------- Heading ---------- */
+.container-products h2 {
+font-size: 32px;
+font-weight: 700;
+color: var(--primary);
+margin-bottom: 12px;
+}
+
+.container-products p {
+font-size: 12px;
+line-height: 1.4;
+color: var(--text);
+}
+
+/* ---------- Search + Sort bar ---------- */
+.toolbar {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 16px;
+}
+.search-box {
+display: flex;
+align-items: center;
+gap: 10px;
+width: 300px;
+height: 36px;
+padding: 0 14px;
+border: 1px solid var(--primary);
+border-radius: 999px;
+color: var(--primary);
+background: #fff;
+}
+
+.search-box input {
+flex: 1;
+border: none;
+outline: none;
+background: transparent;
+font-family: inherit;
+font-size: 14px;
+color: var(--text);
+}
+
+.search-box input::placeholder {
+color: #a78bfa;
+}
+
+.sort {
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 14px;
+font-weight: 600;
+color: var(--primary);
+}
+
+.sort-select {
+position: relative;
+border-left: 1px solid var(--border);
+border-right: 1px solid var(--border);
+}
+
+.sort-select select {
+appearance: none;
+-webkit-appearance: none;
+border: none;
+outline: none;
+background: transparent;
+font-family: inherit;
+font-size: 14px;
+font-weight: 600;
+color: var(--primary);
+padding: 8px 40px 8px 14px;
+cursor: pointer;
+}
+
+.sort-select i {
+position: absolute;
+right: 14px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 11px;
+color: var(--text);
+pointer-events: none;
+}
+
+/* ---------- Card grid ---------- */
+.card-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+}
+
+.main-card {
+display: flex;
+flex-direction: column;
+gap: 16px;
+padding: 10px 10px 16px;
+border: 1px solid var(--border);
+border-radius: 16px;
+background: #fff;
+transition:0.3s ease;
+}
+.main-card:hover{
+box-shadow: 0 8px 20px rgba(124, 58, 237, 0.15);
+transform: translateY(-4px);
+}
+
+.main-card img {
+width: 100%;
+object-fit: contain;
+border-radius: 16px;
+}
+
+
+.tittle {
+display: flex;
+flex-direction: column;
+gap: 14px;
+padding: 0 8px;
+}
+
+.tittle h4 {
+font-size: 11px;
+font-weight: 600;
+color: var(--primary);
+}
+
+.tittle h1 {
+font-size: 16px;
+font-weight: 700;
+color: var(--text);
+}
+
+.tittle p {
+font-size: 9px;
+color: var(--muted);
+}
+
+.tittle h3 {
+font-size: 11px;
+font-weight: 600;
+}
+
+.tittle h3 a {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+color: var(--primary);
+text-decoration: none;
+}
+
+.tittle h3 a:hover {
+text-decoration: underline;
+}
+
+.tittle h3 a:focus-visible,
+.search-box:focus-within,
+.sort-select:focus-within {
+outline: 2px solid var(--primary);
+outline-offset: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+.card-hero { padding: 20px 40px; }
+.card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+.card-hero { padding: 20px 16px; }
+.card-grid { grid-template-columns: 1fr; }
+.toolbar { flex-direction: column; align-items: stretch; }
+.search-box { width: 100%; }
+.sort { justify-content: flex-end; }
+}
+/* Footer */
+footer {
+display: grid;
+grid-template-columns: 1.4fr 1fr auto;
+grid-template-areas:
+"logo quick why"
+"info quick why"
+"copy copy copy";
+column-gap: clamp(24px, 4vw, 60px);
+row-gap: 12px;
+align-items: start;
+padding: 20px var(--side-padding);
+background: #DDD6FE;
+font-family: "Nunito", sans-serif;
+color: #1f2937;
+margin-top: 50px;
+}
+
+/* Footer logo */
+footer > p {
+grid-area: logo;
+font-size: 11px;
+font-weight: 400;
+letter-spacing: 0.5px;
+line-height: 1;
+}
+
+footer > p span {
+display: block;
+font-size: clamp(20px, 1.8vw, 26px);
+font-weight: 700;
+letter-spacing: 0;
+line-height: 1.1;
+}
+
+/* Left column: tagline and social icons */
+.left-footer {
+grid-area: info;
+min-width: 0;
+}
+
+.left-footer > p {
+max-width: 280px;
+font-size: 16px;
+font-weight: 700;
+line-height: 1.4;
+}
+
+.icon-footer {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-top: 16px;
+}
+
+.icon-footer img {
+width: 24px;
+height: 24px;
+object-fit: fill;
+border-radius: 100%;
+}
+
+/* Middle column: quick links */
+.middle-footer {
+grid-area: quick;
+min-width: 0;
+display: flex;
+flex-direction: column;
+gap: 14px;
+margin-left: -70px;
+}
+
+.middle-footer::before {
+content: "QUICK LINKS";
+margin-bottom: 4px;
+font-size: 16px;
+font-weight: 600;
+letter-spacing: 0.5px;
+}
+
+.middle-footer a {
+position: relative;
+width: fit-content;
+font-size: 16px;
+font-weight: 700;
+color: #000000;
+text-decoration: none;
+transition: color 0.2s;
+}
+.middle-footer a::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: -4px;
+width: 0;
+height: 2px;
+background: #000000;
+transition: width 0.25s;
+}
+
+.middle-footer a:hover {
+color: #7C3AED;
+}
+
+.middle-footer a:hover::after {
+width: 100%;
+}
+
+/* Right column: why choose us, ends at the same right edge as the header button */
+.right-footer {
+grid-area: why;
+justify-self: end;
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+.right-footer span {
+margin-bottom: 4px;
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 0.5px;
+}
+
+.right-footer p {
+font-size: 16px;
+font-weight: 700;
+}
+
+/* Divider and copyright */
+footer::after {
+content: "© 2026 Mekong Pack Solutions. All rights reserved.";
+grid-area: copy;
+margin-top: 32px;
+padding-top: 28px;
+border-top: 1px solid #6B7280;
+text-align: center;
+font-size: 12px;
+font-weight: 700;
+}
+
+/* Footer small laptops (up to 1000px): Quick Links no longer overlaps the tagline */
+@media (max-width: 1000px) {
+.middle-footer {
+margin-left: 0;
+}
+}
+
+/* Footer tablet (up to 900px) */
+@media (max-width: 900px) {
+footer {
+grid-template-columns: 1fr 1fr;
+grid-template-areas:
+"logo logo"
+"info info"
+"quick why"
+"copy copy";
+column-gap: 24px;
+row-gap: 20px;
+padding-top: 28px;
+padding-bottom: 20px;
+margin-top: 32px;
+}
+
+.middle-footer {
+margin-left: 0;
+}
+
+.right-footer {
+justify-self: start;
+}
+
+.left-footer > p {
+max-width: 360px;
+}
+
+footer::after {
+margin-top: 12px;
+padding-top: 20px;
+font-size: 14px;
+}
+}
+
+/* Footer mobile (up to 520px) */
+@media (max-width: 520px) {
+footer {
+grid-template-columns: 1fr;
+grid-template-areas:
+"logo"
+"info"
+"quick"
+"why"
+"copy";
+row-gap: 24px;
+margin-top: 24px;
+}
+
+.left-footer > p,
+.middle-footer::before,
+.middle-footer a,
+.right-footer span,
+.right-footer p {
+font-size: 18px;
+}
+
+.icon-footer img {
+width: 36px;
+height: 36px;
+}
+
+footer::after {
+font-size: 13px;
+}
+}
